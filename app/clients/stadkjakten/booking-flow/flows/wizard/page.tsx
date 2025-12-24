@@ -10,8 +10,7 @@ import { Container } from '@/components/storybook/Container';
 import React, { useState } from 'react';
 
 export default function CombinedWizardPage() {
-  console.log('[DEBUG] CombinedWizardPage component loaded');
-  const [currentStep, setCurrentStep] = useState(1);
+  console.log('[DEBUG] CombinedWizardPage component loaded - ALL 3 SECTIONS ON ONE PAGE');
   const [selectedType, setSelectedType] = useState<string>('');
   const [squareMeters, setSquareMeters] = useState<string>('');
   const [selectedRange, setSelectedRange] = useState<string>('');
@@ -81,63 +80,27 @@ export default function CombinedWizardPage() {
   };
 
   const handleNext = () => {
-    console.log('[DEBUG] handleNext called, currentStep:', currentStep);
+    console.log('[DEBUG] handleNext called - going to results');
     console.log('[DEBUG] Form data:', { selectedType, squareMeters, hasPets });
     
-    if (currentStep < 3) {
-      console.log('[DEBUG] Moving to step', currentStep + 1);
-      setCurrentStep(currentStep + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      // Go to results
-      console.log('[DEBUG] Final step - going to results');
-      const searchParams = new URLSearchParams();
-      searchParams.set('houseType', selectedType);
-      searchParams.set('squareMeters', squareMeters);
-      searchParams.set('pets', hasPets ? 'yes' : 'no');
-      
-      const resultsUrl = `/clients/stadkjakten/booking-flow/flows/results?${searchParams.toString()}`;
-      console.log('[DEBUG] Navigating to results:', resultsUrl);
-      window.location.href = resultsUrl;
-    }
+    // Go to results
+    const searchParams = new URLSearchParams();
+    searchParams.set('houseType', selectedType);
+    searchParams.set('squareMeters', squareMeters);
+    searchParams.set('pets', hasPets ? 'yes' : 'no');
+    
+    const resultsUrl = `/clients/stadkjakten/booking-flow/flows/results?${searchParams.toString()}`;
+    console.log('[DEBUG] Navigating to results:', resultsUrl);
+    window.location.href = resultsUrl;
   };
 
   const handleBack = () => {
-    console.log('[DEBUG] handleBack called, currentStep:', currentStep);
-    
-    if (currentStep > 1) {
-      console.log('[DEBUG] Moving back to step', currentStep - 1);
-      setCurrentStep(currentStep - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      console.log('[DEBUG] Going back to previous page');
-      window.history.back();
-    }
+    console.log('[DEBUG] Going back to previous page');
+    window.history.back();
   };
 
   const canProceed = () => {
-    if (currentStep === 1) return selectedType !== '';
-    if (currentStep === 2) return squareMeters && parseInt(squareMeters) > 0;
-    if (currentStep === 3) return hasPets !== null;
-    return false;
-  };
-
-  const getStepTitle = () => {
-    switch (currentStep) {
-      case 1: return 'Vilken typ av bostad ska städas?';
-      case 2: return 'Hur stor är din bostad?';
-      case 3: return 'Har ni husdjur hemma?';
-      default: return '';
-    }
-  };
-
-  const getStepDescription = () => {
-    switch (currentStep) {
-      case 1: return 'Välj din bostadstyp så kan vi ge dig bästa möjliga pris';
-      case 2: return 'Ange antal kvadratmeter för att få en korrekt prisuppskattning';
-      case 3: return 'Detta hjälper oss matcha dig med städfirmor som har rätt utrustning';
-      default: return '';
-    }
+    return selectedType !== '' && squareMeters && parseInt(squareMeters) > 0 && hasPets !== null;
   };
 
   return (
@@ -151,22 +114,41 @@ export default function CombinedWizardPage() {
       
       <Hero
         variant="centered"
-        title={getStepTitle()}
-        subtitle={`Steg ${currentStep} av 3`}
-        description={getStepDescription()}
-        badge={`🧹 STEG ${currentStep}`}
+        title="Berätta om ditt hem"
+        subtitle="Alla uppgifter på en sida"
+        description="Fyll i alla uppgifter nedan för att få en skräddarsydd offert"
+        badge="🧹 KOMBINERAT FORMULÄR"
         backgroundPattern={true}
       />
 
       <Container maxWidth="xl" style={{ padding: '2rem' }}>
         
-        {/* STEP 1: House Type */}
-        {currentStep === 1 && (
+        {/* SECTION 1: House Type */}
+        <div style={{ marginBottom: '4rem' }}>
+          <h2 style={{
+            fontFamily: 'Kalam, cursive',
+            fontSize: '2rem',
+            color: 'var(--text-primary, #1a1a1a)',
+            textAlign: 'center',
+            marginBottom: '1rem',
+            transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+          }}>
+            1. Vilken typ av bostad ska städas?
+          </h2>
+          <p style={{
+            textAlign: 'center',
+            color: 'var(--text-secondary, #6b7280)',
+            marginBottom: '2rem',
+            fontSize: '1.1rem'
+          }}>
+            Välj din bostadstyp så kan vi ge dig bästa möjliga pris
+          </p>
+          
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: '2rem',
-            marginTop: '2rem'
+            marginBottom: '3rem'
           }}>
             {houseTypes.map((type) => {
               const rotation = React.useMemo(() => Math.random() * 2 - 1, []);
@@ -259,11 +241,30 @@ export default function CombinedWizardPage() {
               );
             })}
           </div>
-        )}
+        </div>
 
-        {/* STEP 2: Square Meters */}
-        {currentStep === 2 && (
-          <>
+        {/* SECTION 2: Square Meters */}
+        <div style={{ marginBottom: '4rem' }}>
+          <h2 style={{
+            fontFamily: 'Kalam, cursive',
+            fontSize: '2rem',
+            color: 'var(--text-primary, #1a1a1a)',
+            textAlign: 'center',
+            marginBottom: '1rem',
+            transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+          }}>
+            2. Hur stor är din bostad?
+          </h2>
+          <p style={{
+            textAlign: 'center',
+            color: 'var(--text-secondary, #6b7280)',
+            marginBottom: '2rem',
+            fontSize: '1.1rem'
+          }}>
+            Ange antal kvadratmeter för att få en korrekt prisuppskattning
+          </p>
+          
+          <div>
             {/* Quick selection ranges */}
             <div style={{
               display: 'grid',
@@ -405,12 +406,31 @@ export default function CombinedWizardPage() {
                 )}
               </CardContent>
             </Card>
-          </>
-        )}
+          </div>
+        </div>
 
-        {/* STEP 3: Pet Ownership */}
-        {currentStep === 3 && (
-          <>
+        {/* SECTION 3: Pet Ownership */}
+        <div style={{ marginBottom: '4rem' }}>
+          <h2 style={{
+            fontFamily: 'Kalam, cursive',
+            fontSize: '2rem',
+            color: 'var(--text-primary, #1a1a1a)',
+            textAlign: 'center',
+            marginBottom: '1rem',
+            transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+          }}>
+            3. Har ni husdjur hemma?
+          </h2>
+          <p style={{
+            textAlign: 'center',
+            color: 'var(--text-secondary, #6b7280)',
+            marginBottom: '2rem',
+            fontSize: '1.1rem'
+          }}>
+            Detta hjälper oss matcha dig med städfirmor som har rätt utrustning
+          </p>
+          
+          <div>
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
@@ -548,8 +568,8 @@ export default function CombinedWizardPage() {
                 </CardContent>
               </Card>
             )}
-          </>
-        )}
+          </div>
+        </div>
 
         {/* Navigation buttons */}
         <div style={{
@@ -569,30 +589,20 @@ export default function CombinedWizardPage() {
 
           <div style={{ textAlign: 'center' }}>
             <div style={{
-              display: 'flex',
-              gap: '0.5rem',
-              alignItems: 'center',
-              marginBottom: '0.5rem'
+              padding: '1rem',
+              backgroundColor: canProceed() ? 'rgba(0, 123, 255, 0.1)' : 'rgba(108, 114, 128, 0.1)',
+              borderRadius: '8px',
+              border: `2px dashed ${canProceed() ? 'var(--accent, #007bff)' : 'var(--border-color, #e5e7eb)'}`
             }}>
-              {[1, 2, 3].map((step) => (
-                <div
-                  key={step}
-                  style={{
-                    width: '12px',
-                    height: '12px',
-                    borderRadius: '50%',
-                    backgroundColor: currentStep >= step ? 'var(--accent, #007bff)' : 'var(--border-color, #e5e7eb)'
-                  }}
-                />
-              ))}
+              <p style={{
+                fontSize: '0.875rem',
+                color: canProceed() ? 'var(--accent, #007bff)' : 'var(--text-secondary, #6b7280)',
+                margin: 0,
+                fontWeight: '500'
+              }}>
+                {canProceed() ? '✅ Alla fält ifyllda - redo att fortsätta!' : '⏳ Fyll i alla fält för att fortsätta'}
+              </p>
             </div>
-            <p style={{
-              fontSize: '0.875rem',
-              color: 'var(--text-secondary, #6b7280)',
-              margin: 0
-            }}>
-              Steg {currentStep} av 3
-            </p>
           </div>
 
           <Button
@@ -605,7 +615,7 @@ export default function CombinedWizardPage() {
               cursor: canProceed() ? 'pointer' : 'not-allowed'
             }}
           >
-            {currentStep === 3 ? 'Se resultat →' : 'Nästa →'}
+            Se resultat →
           </Button>
         </div>
       </Container>
