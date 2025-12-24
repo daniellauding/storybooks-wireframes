@@ -169,11 +169,16 @@ export default function ResultsPage() {
           </CardContent>
         </Card>
 
-        {/* Company cards */}
+        {/* Company cards - Mobile optimized */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
-          gap: '1.5rem'
+          gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
+          gap: '1.5rem',
+          // Mobile: show 1 card per row, Tablet+: show 2 cards per row
+          '@media (max-width: 768px)': {
+            gridTemplateColumns: '1fr',
+            gap: '1rem'
+          }
         }}>
           {cleaningCompanies.map((company) => {
             const rotation = React.useMemo(() => Math.random() * 1 - 0.5, []);
@@ -376,33 +381,68 @@ export default function ResultsPage() {
                     </p>
                   )}
 
-                  {/* Action buttons */}
+                  {/* Action buttons - Mobile optimized */}
                   <div style={{
                     display: 'flex',
+                    flexDirection: 'column',
                     gap: '0.75rem'
                   }}>
                     <Button
                       variant="primary"
-                      size="md"
-                      style={{ flex: 1 }}
-                      onClick={() => console.log(`Booking ${company.name}`)}
+                      size="lg"
+                      style={{ width: '100%', fontSize: '1.1rem' }}
+                      onClick={() => {
+                        console.log(`Booking ${company.name}`);
+                        // Navigate to checkout with company data
+                        const checkoutParams = new URLSearchParams();
+                        checkoutParams.set('companyId', company.id.toString());
+                        checkoutParams.set('companyName', company.name);
+                        checkoutParams.set('houseType', searchParams.houseType);
+                        checkoutParams.set('squareMeters', searchParams.squareMeters);
+                        checkoutParams.set('pets', searchParams.pets);
+                        checkoutParams.set('originalPrice', company.originalPrice.toString());
+                        checkoutParams.set('customerPrice', company.customerPrice.toString());
+                        
+                        const checkoutUrl = `/clients/stadkjakten/booking-flow/flows/checkout?${checkoutParams.toString()}`;
+                        console.log('[DEBUG] Navigating to checkout:', checkoutUrl);
+                        window.location.href = checkoutUrl;
+                      }}
                     >
-                      Boka nu
+                      🕐 Välj tid & boka
                     </Button>
-                    <Button
-                      variant="ghost"
-                      size="md"
-                      onClick={() => console.log(`Viewing ${company.name} on maps`)}
-                    >
-                      🗺️ Karta
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="md"
-                      onClick={() => console.log(`Contacting ${company.name}`)}
-                    >
-                      📞 Ring
-                    </Button>
+                    <div style={{
+                      display: 'flex',
+                      gap: '0.5rem'
+                    }}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        style={{ flex: 1 }}
+                        onClick={() => window.open(`https://maps.google.com/search/${encodeURIComponent(company.address)}`, '_blank')}
+                      >
+                        🗺️ Karta
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        style={{ flex: 1 }}
+                        onClick={() => window.open(`tel:+46${Math.floor(Math.random() * 900000000) + 100000000}`)}
+                      >
+                        📞 Ring
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        style={{ flex: 1 }}
+                        onClick={() => {
+                          console.log(`Viewing ${company.name} company page`);
+                          // TODO: Navigate to company page
+                          alert(`Går till ${company.name}s firmamsida`);
+                        }}
+                      >
+                        🏢 Firma
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
