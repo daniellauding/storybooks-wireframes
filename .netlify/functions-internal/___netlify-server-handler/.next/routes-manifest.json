@@ -1,0 +1,157 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "app",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/clients/[clientId]",
+      "regex": "^/clients/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPclientId": "nxtPclientId"
+      },
+      "namedRegex": "^/clients/(?<nxtPclientId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/clients/[clientId]/[projectId]",
+      "regex": "^/clients/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPclientId": "nxtPclientId",
+        "nxtPprojectId": "nxtPprojectId"
+      },
+      "namedRegex": "^/clients/(?<nxtPclientId>[^/]+?)/(?<nxtPprojectId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/clients/[clientId]/[projectId]/flows/[flowId]",
+      "regex": "^/clients/([^/]+?)/([^/]+?)/flows/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPclientId": "nxtPclientId",
+        "nxtPprojectId": "nxtPprojectId",
+        "nxtPflowId": "nxtPflowId"
+      },
+      "namedRegex": "^/clients/(?<nxtPclientId>[^/]+?)/(?<nxtPprojectId>[^/]+?)/flows/(?<nxtPflowId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/flows/[flowId]",
+      "regex": "^/flows/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPflowId": "nxtPflowId"
+      },
+      "namedRegex": "^/flows/(?<nxtPflowId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/projects/[projectId]",
+      "regex": "^/projects/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPprojectId": "nxtPprojectId"
+      },
+      "namedRegex": "^/projects/(?<nxtPprojectId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/[client]",
+      "regex": "^/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPclient": "nxtPclient"
+      },
+      "namedRegex": "^/(?<nxtPclient>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/[client]/[project]",
+      "regex": "^/([^/]+?)/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPclient": "nxtPclient",
+        "nxtPproject": "nxtPproject"
+      },
+      "namedRegex": "^/(?<nxtPclient>[^/]+?)/(?<nxtPproject>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/[client]/[project]/flows/[flow]",
+      "regex": "^/([^/]+?)/([^/]+?)/flows/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPclient": "nxtPclient",
+        "nxtPproject": "nxtPproject",
+        "nxtPflow": "nxtPflow"
+      },
+      "namedRegex": "^/(?<nxtPclient>[^/]+?)/(?<nxtPproject>[^/]+?)/flows/(?<nxtPflow>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/clients/stadkjakten/booking-flow/flows/results",
+      "regex": "^/clients/stadkjakten/booking\\-flow/flows/results(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/clients/stadkjakten/booking\\-flow/flows/results(?:/)?$"
+    },
+    {
+      "page": "/clients/stadkjakten/booking-flow/flows/wizard",
+      "regex": "^/clients/stadkjakten/booking\\-flow/flows/wizard(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/clients/stadkjakten/booking\\-flow/flows/wizard(?:/)?$"
+    },
+    {
+      "page": "/experiments",
+      "regex": "^/experiments(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/experiments(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

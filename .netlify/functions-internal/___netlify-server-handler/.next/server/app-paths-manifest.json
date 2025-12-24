@@ -1,0 +1,17 @@
+{
+  "/[client]/[project]/flows/[flow]/page": "app/[client]/[project]/flows/[flow]/page.js",
+  "/[client]/[project]/page": "app/[client]/[project]/page.js",
+  "/[client]/page": "app/[client]/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/clients/[clientId]/[projectId]/flows/[flowId]/page": "app/clients/[clientId]/[projectId]/flows/[flowId]/page.js",
+  "/clients/[clientId]/[projectId]/page": "app/clients/[clientId]/[projectId]/page.js",
+  "/clients/[clientId]/page": "app/clients/[clientId]/page.js",
+  "/clients/stadkjakten/booking-flow/flows/results/page": "app/clients/stadkjakten/booking-flow/flows/results/page.js",
+  "/clients/stadkjakten/booking-flow/flows/wizard/page": "app/clients/stadkjakten/booking-flow/flows/wizard/page.js",
+  "/experiments/page": "app/experiments/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/flows/[flowId]/page": "app/flows/[flowId]/page.js",
+  "/page": "app/page.js",
+  "/projects/[projectId]/page": "app/projects/[projectId]/page.js"
+}

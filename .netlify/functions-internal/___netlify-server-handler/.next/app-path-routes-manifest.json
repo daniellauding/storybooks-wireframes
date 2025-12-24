@@ -1,0 +1,17 @@
+{
+  "/[client]/[project]/flows/[flow]/page": "/[client]/[project]/flows/[flow]",
+  "/[client]/[project]/page": "/[client]/[project]",
+  "/[client]/page": "/[client]",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/clients/[clientId]/[projectId]/flows/[flowId]/page": "/clients/[clientId]/[projectId]/flows/[flowId]",
+  "/clients/[clientId]/[projectId]/page": "/clients/[clientId]/[projectId]",
+  "/clients/[clientId]/page": "/clients/[clientId]",
+  "/clients/stadkjakten/booking-flow/flows/results/page": "/clients/stadkjakten/booking-flow/flows/results",
+  "/clients/stadkjakten/booking-flow/flows/wizard/page": "/clients/stadkjakten/booking-flow/flows/wizard",
+  "/experiments/page": "/experiments",
+  "/favicon.ico/route": "/favicon.ico",
+  "/flows/[flowId]/page": "/flows/[flowId]",
+  "/page": "/",
+  "/projects/[projectId]/page": "/projects/[projectId]"
+}

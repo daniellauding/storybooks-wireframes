@@ -1,6 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
 @import "tailwindcss";
 
 :root {
+  /* Wireframe Storybook CSS Variables */
+  --surface-color: #fafafa;
+  --border-color: #e5e7eb;
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --accent: #007bff;
+  --error: #dc3545;
+  --success: #28a745;
+  --warning: #ffc107;
+  --info: #17a2b8;
+  --bg-color: #f0f0f0;
+  
+  /* Original theme variables */
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -16,6 +31,15 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    
+    /* Dark mode wireframe variables */
+    --surface-color: #1f2937;
+    --border-color: #374151;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --text-muted: #9ca3af;
+    --accent: #3b82f6;
+    --bg-color: #111827;
   }
 }
 
@@ -24,3 +48,5 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Google Fonts already imported at top */
