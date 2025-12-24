@@ -10,6 +10,8 @@ import React, { useEffect, useState } from 'react';
 
 export default function ResultsPage() {
   const [searchParams, setSearchParams] = useState<any>({});
+  const [showSlotsFor, setShowSlotsFor] = useState<number | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<any>(null);
 
   useEffect(() => {
     // Get search parameters from URL
@@ -42,7 +44,14 @@ export default function ResultsPage() {
       certifications: ['Miljöcertifierad', 'Top Partner', 'Kollektivavtal'],
       specialties: ['Husdjursvänlig', 'Allergiutbildad'],
       description: 'Professionell hemstädning med 15 års erfarenhet. Vi använder miljövänliga produkter.',
-      availability: 'Ledig idag'
+      availability: 'Ledig idag',
+      availableSlots: [
+        { id: 1, date: '2024-12-27', time: '09:00', type: 'confirmed' },
+        { id: 2, date: '2024-12-27', time: '13:00', type: 'confirmed' },
+        { id: 3, date: '2024-12-28', time: '10:00', type: 'confirmed' },
+        { id: 4, date: '2024-12-29', time: '14:00', type: 'preferred' },
+        { id: 5, date: '2024-12-30', time: '08:00', type: 'confirmed' }
+      ]
     },
     {
       id: 2,
@@ -57,7 +66,12 @@ export default function ResultsPage() {
       certifications: ['Miljöcertifierad', 'Kollektivavtal'],
       specialties: ['Husdjur OK', 'Snabbstädning'],
       description: 'Flexibel städservice med fokus på kundnöjdhet. Garanterar alltid bra resultat.',
-      availability: 'Ledig imorgon'
+      availability: 'Ledig imorgon',
+      availableSlots: [
+        { id: 1, date: '2024-12-28', time: '09:30', type: 'confirmed' },
+        { id: 2, date: '2024-12-28', time: '14:30', type: 'preferred' },
+        { id: 3, date: '2024-12-29', time: '11:00', type: 'confirmed' }
+      ]
     },
     {
       id: 3,
@@ -73,7 +87,11 @@ export default function ResultsPage() {
       specialties: ['Luksustädning', 'Detaljerad'],
       description: 'Premiumstädning för kräsna kunder. Högsta kvalitet med 100% nöjdhetsgaranti.',
       availability: 'Ledig på måndag',
-      extra: 'Kilometerersättning efter 20km: 15kr/km'
+      extra: 'Kilometerersättning efter 20km: 15kr/km',
+      availableSlots: [
+        { id: 1, date: '2024-12-30', time: '10:00', type: 'confirmed' },
+        { id: 2, date: '2024-12-31', time: '14:00', type: 'preferred' }
+      ]
     },
     {
       id: 4,
@@ -88,7 +106,12 @@ export default function ResultsPage() {
       certifications: ['Kollektivavtal'],
       specialties: ['Express', 'Helger OK'],
       description: 'Snabb och effektiv städning när det passar dig. Specialister på akuta städbehov.',
-      availability: 'Ledig samma dag'
+      availability: 'Ledig samma dag',
+      availableSlots: [
+        { id: 1, date: '2024-12-26', time: '15:00', type: 'confirmed' },
+        { id: 2, date: '2024-12-27', time: '12:00', type: 'confirmed' },
+        { id: 3, date: '2024-12-27', time: '16:00', type: 'preferred' }
+      ]
     }
   ];
 
@@ -212,13 +235,22 @@ export default function ResultsPage() {
                     </div>
                     
                     <div style={{ flex: 1 }}>
-                      <h3 style={{
-                        fontFamily: 'Kalam, cursive',
-                        fontSize: '1.25rem',
-                        fontWeight: '600',
-                        color: 'var(--text-primary, #1a1a1a)',
-                        margin: '0 0 0.25rem 0'
-                      }}>
+                      <h3 
+                        style={{
+                          fontFamily: 'Kalam, cursive',
+                          fontSize: '1.25rem',
+                          fontWeight: '600',
+                          color: 'var(--accent, #007bff)',
+                          margin: '0 0 0.25rem 0',
+                          cursor: 'pointer',
+                          textDecoration: 'underline'
+                        }}
+                        onClick={() => {
+                          console.log(`[DEBUG] Navigating to ${company.name} company page`);
+                          const companyUrl = `/clients/stadkjakten/booking-flow/company/${company.id}`;
+                          window.location.href = companyUrl;
+                        }}
+                      >
                         {company.name}
                       </h3>
                       
@@ -381,6 +413,109 @@ export default function ResultsPage() {
                     </p>
                   )}
 
+                  {/* Time slots section */}
+                  {showSlotsFor === company.id && (
+                    <div style={{
+                      backgroundColor: 'rgba(0, 123, 255, 0.05)',
+                      padding: '1rem',
+                      borderRadius: '8px',
+                      border: '1px dashed var(--accent, #007bff)',
+                      marginBottom: '1rem'
+                    }}>
+                      <h4 style={{
+                        fontSize: '1rem',
+                        fontWeight: '600',
+                        marginBottom: '0.75rem',
+                        color: 'var(--text-primary, #1a1a1a)'
+                      }}>
+                        🕐 Välj tid för bokning
+                      </h4>
+                      
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+                        gap: '0.5rem',
+                        marginBottom: '1rem'
+                      }}>
+                        {company.availableSlots.slice(0, 6).map((slot: any) => {
+                          const date = new Date(slot.date);
+                          const dayName = date.toLocaleDateString('sv-SE', { weekday: 'short' });
+                          const dateStr = date.toLocaleDateString('sv-SE', { month: 'short', day: 'numeric' });
+                          const isSelected = selectedSlot?.id === slot.id;
+                          
+                          return (
+                            <Button
+                              key={slot.id}
+                              variant={isSelected ? "primary" : slot.type === 'confirmed' ? "secondary" : "ghost"}
+                              size="sm"
+                              onClick={() => setSelectedSlot(slot)}
+                              style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                padding: '0.5rem',
+                                fontSize: '0.75rem',
+                                lineHeight: '1.2'
+                              }}
+                            >
+                              <span style={{ fontWeight: '600' }}>{dayName} {dateStr}</span>
+                              <span>Kl {slot.time}</span>
+                              {slot.type === 'preferred' && <span style={{ fontSize: '0.6rem', opacity: 0.8 }}>*Önskad</span>}
+                            </Button>
+                          );
+                        })}
+                      </div>
+                      
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          disabled={!selectedSlot}
+                          onClick={() => {
+                            if (selectedSlot) {
+                              console.log(`[DEBUG] Booking slot:`, selectedSlot);
+                              const checkoutParams = new URLSearchParams();
+                              checkoutParams.set('companyId', company.id.toString());
+                              checkoutParams.set('companyName', company.name);
+                              checkoutParams.set('houseType', searchParams.houseType);
+                              checkoutParams.set('squareMeters', searchParams.squareMeters);
+                              checkoutParams.set('pets', searchParams.pets);
+                              checkoutParams.set('originalPrice', company.originalPrice.toString());
+                              checkoutParams.set('customerPrice', company.customerPrice.toString());
+                              checkoutParams.set('slotDate', selectedSlot.date);
+                              checkoutParams.set('slotTime', selectedSlot.time);
+                              checkoutParams.set('slotType', selectedSlot.type);
+                              
+                              const checkoutUrl = `/clients/stadkjakten/booking-flow/flows/checkout?${checkoutParams.toString()}`;
+                              window.location.href = checkoutUrl;
+                            }
+                          }}
+                          style={{ flex: 1 }}
+                        >
+                          ✓ Boka vald tid
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            setShowSlotsFor(null);
+                            setSelectedSlot(null);
+                          }}
+                        >
+                          Avbryt
+                        </Button>
+                      </div>
+                      
+                      <p style={{
+                        fontSize: '0.75rem',
+                        color: 'var(--text-secondary, #6b7280)',
+                        marginTop: '0.5rem',
+                        margin: '0.5rem 0 0 0'
+                      }}>
+                        💡 *Önskad tid = kräver bekräftelse, andra tider = direkt bokning
+                      </p>
+                    </div>
+                  )}
+
                   {/* Action buttons - Mobile optimized */}
                   <div style={{
                     display: 'flex',
@@ -392,23 +527,16 @@ export default function ResultsPage() {
                       size="lg"
                       style={{ width: '100%', fontSize: '1.1rem' }}
                       onClick={() => {
-                        console.log(`Booking ${company.name}`);
-                        // Navigate to checkout with company data
-                        const checkoutParams = new URLSearchParams();
-                        checkoutParams.set('companyId', company.id.toString());
-                        checkoutParams.set('companyName', company.name);
-                        checkoutParams.set('houseType', searchParams.houseType);
-                        checkoutParams.set('squareMeters', searchParams.squareMeters);
-                        checkoutParams.set('pets', searchParams.pets);
-                        checkoutParams.set('originalPrice', company.originalPrice.toString());
-                        checkoutParams.set('customerPrice', company.customerPrice.toString());
-                        
-                        const checkoutUrl = `/clients/stadkjakten/booking-flow/flows/checkout?${checkoutParams.toString()}`;
-                        console.log('[DEBUG] Navigating to checkout:', checkoutUrl);
-                        window.location.href = checkoutUrl;
+                        if (showSlotsFor === company.id) {
+                          setShowSlotsFor(null);
+                          setSelectedSlot(null);
+                        } else {
+                          setShowSlotsFor(company.id);
+                          setSelectedSlot(null);
+                        }
                       }}
                     >
-                      🕐 Välj tid & boka
+                      {showSlotsFor === company.id ? '❌ Stäng tidsval' : '🕐 Välj tid & boka'}
                     </Button>
                     <div style={{
                       display: 'flex',
@@ -435,9 +563,9 @@ export default function ResultsPage() {
                         size="sm"
                         style={{ flex: 1 }}
                         onClick={() => {
-                          console.log(`Viewing ${company.name} company page`);
-                          // TODO: Navigate to company page
-                          alert(`Går till ${company.name}s firmamsida`);
+                          console.log(`[DEBUG] Viewing ${company.name} company page`);
+                          const companyUrl = `/clients/stadkjakten/booking-flow/company/${company.id}`;
+                          window.location.href = companyUrl;
                         }}
                       >
                         🏢 Firma
