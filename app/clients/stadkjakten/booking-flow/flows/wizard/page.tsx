@@ -112,14 +112,50 @@ export default function CombinedWizardPage() {
         variant="default"
       />
       
-      <Hero
-        variant="centered"
-        title="Berätta om ditt hem"
-        subtitle="Alla uppgifter på en sida"
-        description="Fyll i alla uppgifter nedan för att få en skräddarsydd offert"
-        badge="🧹 KOMBINERAT FORMULÄR"
-        backgroundPattern={true}
-      />
+      <div style={{
+        backgroundColor: 'var(--surface-color, #fafafa)',
+        padding: '1.5rem 0',
+        borderBottom: '2px solid var(--border-color, #e5e7eb)',
+        textAlign: 'center'
+      }}>
+        <Container maxWidth="xl">
+          <div style={{
+            display: 'inline-block',
+            backgroundColor: 'var(--accent, #007bff)',
+            color: 'white',
+            padding: '0.5rem 1rem',
+            borderRadius: '20px',
+            fontSize: '0.875rem',
+            fontWeight: '600',
+            marginBottom: '1rem',
+            transform: `rotate(${Math.random() * 2 - 1}deg)`
+          }}>
+            🧹 KOMBINERAT FORMULÄR
+          </div>
+          
+          <h1 style={{
+            fontFamily: 'Kalam, cursive',
+            fontSize: '2rem',
+            fontWeight: '700',
+            color: 'var(--text-primary, #1a1a1a)',
+            margin: '0 0 0.5rem 0',
+            transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+          }}>
+            Berätta om ditt hem
+          </h1>
+          
+          <p style={{
+            fontSize: '1rem',
+            color: 'var(--text-secondary, #6b7280)',
+            margin: 0,
+            maxWidth: '600px',
+            marginLeft: 'auto',
+            marginRight: 'auto'
+          }}>
+            Fyll i alla uppgifter nedan för att få en skräddarsydd offert
+          </p>
+        </Container>
+      </div>
 
       <Container maxWidth="xl" style={{ padding: '2rem' }}>
         
