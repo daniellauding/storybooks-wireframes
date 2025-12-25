@@ -105,6 +105,97 @@ export default function CompanyPage({ params }: { params: { companyId: string } 
         ],
         gallery: ['✨', '🌟', '💫', '⭐'],
         workingHours: 'Mån-Fre: 08:00-17:00, Lör: 09:00-15:00'
+      },
+      '3': {
+        id: 3,
+        name: 'Premium Clean Skåne',
+        logo: '🌟',
+        address: 'Regementsgatan 12, Malmö',
+        phone: '+46 40 555 777',
+        email: 'premium@cleanskane.se',
+        website: 'www.premiumcleanskane.se',
+        rating: 4.9,
+        reviews: 203,
+        description: 'Premiumstädning för kräsna kunder. Vi levererar högsta kvalitet med 100% nöjdhetsgaranti och använder enbart premiumutrustning och miljöcertifierade produkter.',
+        certifications: ['Miljöcertifierad', 'Top Partner', 'ISO-certifierad'],
+        specialties: ['Luksustädning', 'Detaljerad'],
+        services: [
+          {
+            id: 'hemstadning',
+            name: 'Premium Hemstädning',
+            description: 'Luksus hemstädning med högsta kvalitet',
+            basePrice: 520,
+            icon: '🏠'
+          },
+          {
+            id: 'flyttstadning',
+            name: 'Premium Flyttstädning',
+            description: 'Grundlig flyttstädning med garanterat godkänt resultat',
+            basePrice: 750,
+            icon: '📦'
+          },
+          {
+            id: 'kontorsstadning',
+            name: 'Kontorsstädning',
+            description: 'Professionell kontorsstädning',
+            basePrice: 450,
+            icon: '🏢'
+          }
+        ],
+        availableSlots: [
+          { id: 1, date: '2024-12-30', time: '10:00', available: true },
+          { id: 2, date: '2024-12-31', time: '14:00', available: true },
+          { id: 3, date: '2025-01-02', time: '09:00', available: true },
+          { id: 4, date: '2025-01-03', time: '15:00', available: true }
+        ],
+        gallery: ['🌟', '💎', '✨', '🏆'],
+        workingHours: 'Mån-Fre: 07:00-19:00, Lör: 08:00-16:00'
+      },
+      '4': {
+        id: 4,
+        name: 'Snabbstäd Malmö',
+        logo: '⚡',
+        address: 'Möllevångsgatan 22, Malmö',
+        phone: '+46 40 333 999',
+        email: 'info@snabbstad.se',
+        website: 'www.snabbstadmalmo.se',
+        rating: 4.4,
+        reviews: 156,
+        description: 'Snabb och effektiv städning när det passar dig. Vi är specialister på akuta städbehov och kan oftast vara hos dig inom några timmar. Perfekt för sista-minuten städning.',
+        certifications: ['Kollektivavtal'],
+        specialties: ['Express', 'Helger OK'],
+        services: [
+          {
+            id: 'hemstadning',
+            name: 'Express Hemstädning',
+            description: 'Snabb hemstädning samma dag',
+            basePrice: 380,
+            icon: '🏠'
+          },
+          {
+            id: 'akutstadning',
+            name: 'Akutstädning',
+            description: 'Akut städning inom 2-4 timmar',
+            basePrice: 480,
+            icon: '🚨'
+          },
+          {
+            id: 'helgstadning',
+            name: 'Helgstädning',
+            description: 'Städning på helger och kvällar',
+            basePrice: 420,
+            icon: '🌙'
+          }
+        ],
+        availableSlots: [
+          { id: 1, date: '2024-12-26', time: '15:00', available: true },
+          { id: 2, date: '2024-12-27', time: '12:00', available: true },
+          { id: 3, date: '2024-12-27', time: '16:00', available: true },
+          { id: 4, date: '2024-12-28', time: '18:00', available: true },
+          { id: 5, date: '2024-12-29', time: '19:00', available: true }
+        ],
+        gallery: ['⚡', '🚀', '⏰', '💨'],
+        workingHours: '7 dagar i veckan: 06:00-22:00'
       }
     };
 
