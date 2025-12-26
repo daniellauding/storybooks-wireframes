@@ -7,7 +7,7 @@ import { Button } from '@/components/storybook/Button';
 import { Input } from '@/components/storybook/Input';
 import { Badge } from '@/components/storybook/Badge';
 import { Container } from '@/components/storybook/Container';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function CombinedWizardPage() {
   console.log('[DEBUG] CombinedWizardPage component loaded - ALL 3 SECTIONS ON ONE PAGE');
@@ -15,12 +15,34 @@ export default function CombinedWizardPage() {
   const [squareMeters, setSquareMeters] = useState<string>('');
   const [selectedRange, setSelectedRange] = useState<string>('');
   const [hasPets, setHasPets] = useState<boolean | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [preSelectedCompany, setPreSelectedCompany] = useState<string>('');
+  const [preSelectedService, setPreSelectedService] = useState<string>('');
+
+  useEffect(() => {
+    // Handle pre-selected company and service from URL params
+    const params = new URLSearchParams(window.location.search);
+    const company = params.get('company');
+    const service = params.get('service');
+    
+    if (company) {
+      setPreSelectedCompany(company);
+      console.log('[DEBUG] Pre-selected company:', company);
+    }
+    
+    if (service) {
+      setPreSelectedService(service);
+      console.log('[DEBUG] Pre-selected service:', service);
+    }
+    
+    setMounted(true);
+  }, []);
 
   const navigation = [
-    { id: 'hemstadning', label: 'Hemstädning', href: '/hemstadning' },
-    { id: 'fonsterputs', label: 'Fönsterputsning', href: '/fonsterputs' },
-    { id: 'flyttstadning', label: 'Flyttstädning', href: '/flyttstadning' },
-    { id: 'byggstadning', label: 'Byggstädning', href: '/byggstadning' },
+    { id: 'hemstadning', label: 'Hemstädning', href: '/clients/stadkjakten/booking-flow/flows/wizard' },
+    { id: 'fonsterputs', label: 'Fönsterputsning', href: '/clients/stadkjakten/booking-flow/services/fonsterputs' },
+    { id: 'flyttstadning', label: 'Flyttstädning', href: '/clients/stadkjakten/booking-flow/flows/wizard' },
+    { id: 'byggstadning', label: 'Byggstädning', href: '/clients/stadkjakten/booking-flow/flows/wizard' },
   ];
 
   const houseTypes = [
@@ -81,13 +103,21 @@ export default function CombinedWizardPage() {
 
   const handleNext = () => {
     console.log('[DEBUG] handleNext called - going to results');
-    console.log('[DEBUG] Form data:', { selectedType, squareMeters, hasPets });
+    console.log('[DEBUG] Form data:', { selectedType, squareMeters, hasPets, preSelectedCompany, preSelectedService });
     
     // Go to results
     const searchParams = new URLSearchParams();
     searchParams.set('houseType', selectedType);
     searchParams.set('squareMeters', squareMeters);
     searchParams.set('pets', hasPets ? 'yes' : 'no');
+    
+    // Add pre-selected company/service if available
+    if (preSelectedCompany) {
+      searchParams.set('preSelectedCompany', preSelectedCompany);
+    }
+    if (preSelectedService) {
+      searchParams.set('preSelectedService', preSelectedService);
+    }
     
     const resultsUrl = `/clients/stadkjakten/booking-flow/flows/results?${searchParams.toString()}`;
     console.log('[DEBUG] Navigating to results:', resultsUrl);
@@ -128,7 +158,7 @@ export default function CombinedWizardPage() {
             fontSize: '0.875rem',
             fontWeight: '600',
             marginBottom: '1rem',
-            transform: `rotate(${Math.random() * 2 - 1}deg)`
+            transform: mounted ? `rotate(${Math.sin(1) * 2}deg)` : 'none'
           }}>
             🧹 KOMBINERAT FORMULÄR
           </div>
@@ -139,7 +169,7 @@ export default function CombinedWizardPage() {
             fontWeight: '700',
             color: 'var(--text-primary, #1a1a1a)',
             margin: '0 0 0.5rem 0',
-            transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+            transform: mounted ? `rotate(${Math.sin(2) * 0.5}deg)` : 'none'
           }}>
             Berätta om ditt hem
           </h1>
@@ -167,7 +197,7 @@ export default function CombinedWizardPage() {
             color: 'var(--text-primary, #1a1a1a)',
             textAlign: 'center',
             marginBottom: '1rem',
-            transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+            transform: `rotate(${0.3}deg)`
           }}>
             1. Vilken typ av bostad ska städas?
           </h2>
@@ -186,8 +216,8 @@ export default function CombinedWizardPage() {
             gap: '2rem',
             marginBottom: '3rem'
           }}>
-            {houseTypes.map((type) => {
-              const rotation = React.useMemo(() => Math.random() * 2 - 1, []);
+            {houseTypes.map((type, index) => {
+              const rotation = mounted ? (Math.sin(index) * 2) : 0;
               const isSelected = selectedType === type.id;
 
               return (
@@ -213,7 +243,7 @@ export default function CombinedWizardPage() {
                       <div style={{
                         fontSize: '3rem',
                         marginBottom: '1rem',
-                        transform: `rotate(${Math.random() * 5 - 2.5}deg)`
+                        transform: `rotate(${1.2}deg)`
                       }}>
                         {type.icon}
                       </div>
@@ -224,7 +254,7 @@ export default function CombinedWizardPage() {
                         fontWeight: '600',
                         color: 'var(--text-primary, #1a1a1a)',
                         margin: '0 0 0.5rem 0',
-                        transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+                        transform: `rotate(${0.3}deg)`
                       }}>
                         {type.title}
                       </h3>
@@ -250,7 +280,7 @@ export default function CombinedWizardPage() {
                           variant="default" 
                           size="sm"
                           style={{
-                            transform: `rotate(${Math.random() * 3 - 1.5}deg)`
+                            transform: `rotate(${0.9}deg)`
                           }}
                         >
                           {feature}
@@ -287,7 +317,7 @@ export default function CombinedWizardPage() {
             color: 'var(--text-primary, #1a1a1a)',
             textAlign: 'center',
             marginBottom: '1rem',
-            transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+            transform: `rotate(${0.3}deg)`
           }}>
             2. Hur stor är din bostad?
           </h2>
@@ -309,7 +339,7 @@ export default function CombinedWizardPage() {
               marginBottom: '3rem'
             }}>
               {sizeRanges.map((range) => {
-                const rotation = React.useMemo(() => Math.random() * 1.5 - 0.75, []);
+                const rotation = React.useMemo(() => 0.4, []);
                 const isSelected = selectedRange === range.id;
 
                 return (
@@ -331,7 +361,7 @@ export default function CombinedWizardPage() {
                       <div style={{
                         fontSize: '2rem',
                         marginBottom: '0.5rem',
-                        transform: `rotate(${Math.random() * 5 - 2.5}deg)`
+                        transform: `rotate(${1.2}deg)`
                       }}>
                         {range.icon}
                       </div>
@@ -386,7 +416,7 @@ export default function CombinedWizardPage() {
                   fontWeight: '600',
                   color: 'var(--text-primary, #1a1a1a)',
                   margin: '0 0 1rem 0',
-                  transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+                  transform: `rotate(${0.3}deg)`
                 }}>
                   Eller ange exakt yta
                 </h3>
@@ -453,7 +483,7 @@ export default function CombinedWizardPage() {
             color: 'var(--text-primary, #1a1a1a)',
             textAlign: 'center',
             marginBottom: '1rem',
-            transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+            transform: `rotate(${0.3}deg)`
           }}>
             3. Har ni husdjur hemma?
           </h2>
@@ -475,7 +505,7 @@ export default function CombinedWizardPage() {
               margin: '0 auto'
             }}>
               {petOptions.map((option) => {
-                const rotation = React.useMemo(() => Math.random() * 2 - 1, []);
+                const rotation = React.useMemo(() => 0.8, []);
                 const isSelected = hasPets === option.value;
 
                 return (
@@ -503,7 +533,7 @@ export default function CombinedWizardPage() {
                       <div style={{
                         fontSize: '4rem',
                         marginBottom: '1rem',
-                        transform: `rotate(${Math.random() * 8 - 4}deg)`
+                        transform: `rotate(${2.1}deg)`
                       }}>
                         {option.icon}
                       </div>
@@ -514,7 +544,7 @@ export default function CombinedWizardPage() {
                         fontWeight: '600',
                         color: 'var(--text-primary, #1a1a1a)',
                         margin: '0 0 0.5rem 0',
-                        transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+                        transform: `rotate(${0.3}deg)`
                       }}>
                         {option.title}
                       </h3>
@@ -539,7 +569,7 @@ export default function CombinedWizardPage() {
                             variant={option.value ? "warning" : "default"} 
                             size="sm"
                             style={{
-                              transform: `rotate(${Math.random() * 2 - 1}deg)`
+                              transform: `rotate(${0.8}deg)`
                             }}
                           >
                             {detail}
