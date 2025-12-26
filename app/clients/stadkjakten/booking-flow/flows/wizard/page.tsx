@@ -129,9 +129,28 @@ export default function CombinedWizardPage() {
     window.history.back();
   };
 
+  const isOfficeService = preSelectedService === 'kontorsstadning' || preSelectedService === 'byggstadning';
+  const isResidentialService = !isOfficeService;
+
   const canProceed = () => {
-    return selectedType !== '' && squareMeters && parseInt(squareMeters) > 0 && hasPets !== null;
+    const baseRequirements = squareMeters && parseInt(squareMeters) > 0;
+    
+    if (isOfficeService) {
+      // For office/business cleaning, only square meters required
+      return baseRequirements;
+    } else {
+      // For residential cleaning, need house type and pets info
+      return baseRequirements && selectedType !== '' && hasPets !== null;
+    }
   };
+
+  // Auto-select defaults for office services
+  useEffect(() => {
+    if (isOfficeService && mounted) {
+      setSelectedType('office'); // Set a default for office
+      setHasPets(false); // Offices typically don't have pets
+    }
+  }, [isOfficeService, mounted]);
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-color, #f0f0f0)' }}>
@@ -215,8 +234,8 @@ export default function CombinedWizardPage() {
 
       <Container maxWidth="xl" style={{ padding: '2rem' }}>
         
-        {/* SECTION 1: House Type */}
-        <div style={{ marginBottom: '4rem' }}>
+        {/* SECTION 1: House Type - Only for residential services */}
+        {isResidentialService && <div style={{ marginBottom: '4rem' }}>
           <h2 style={{
             fontFamily: 'Kalam, cursive',
             fontSize: '2rem',
@@ -333,7 +352,7 @@ export default function CombinedWizardPage() {
               );
             })}
           </div>
-        </div>
+        </div>}
 
         {/* SECTION 2: Square Meters */}
         <div style={{ marginBottom: '4rem' }}>
@@ -345,7 +364,7 @@ export default function CombinedWizardPage() {
             marginBottom: '1rem',
             transform: `rotate(${0.3}deg)`
           }}>
-            2. Hur stor är din bostad?
+            {isOfficeService ? '1. Hur stor är lokalytan?' : '2. Hur stor är din bostad?'}
           </h2>
           <p style={{
             textAlign: 'center',
@@ -501,8 +520,8 @@ export default function CombinedWizardPage() {
           </div>
         </div>
 
-        {/* SECTION 3: Pet Ownership */}
-        <div style={{ marginBottom: '4rem' }}>
+        {/* SECTION 3: Pet Ownership - Only for residential services */}
+        {isResidentialService && <div style={{ marginBottom: '4rem' }}>
           <h2 style={{
             fontFamily: 'Kalam, cursive',
             fontSize: '2rem',
@@ -661,7 +680,7 @@ export default function CombinedWizardPage() {
               </Card>
             )}
           </div>
-        </div>
+        </div>}
 
         {/* Navigation buttons */}
         <div style={{
