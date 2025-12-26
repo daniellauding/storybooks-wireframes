@@ -124,11 +124,8 @@ export default function CheckoutPage() {
       <Container maxWidth="lg" style={{ padding: '2rem' }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 400px',
-          gap: '2rem',
-          '@media (max-width: 1024px)': {
-            gridTemplateColumns: '1fr'
-          }
+          gridTemplateColumns: '1fr',
+          gap: '2rem'
         }}>
           
           {/* Left column - Customer form */}
@@ -164,12 +161,12 @@ export default function CheckoutPage() {
                   <Input
                     placeholder="Förnamn *"
                     value={customerInfo.firstName}
-                    onChange={(e) => handleInputChange('firstName', e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('firstName', e.target.value)}
                   />
                   <Input
                     placeholder="Efternamn *"
                     value={customerInfo.lastName}
-                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('lastName', e.target.value)}
                   />
                 </div>
 
@@ -182,19 +179,19 @@ export default function CheckoutPage() {
                   <Input
                     placeholder="Personnummer (YYYYMMDD-XXXX) *"
                     value={customerInfo.socialSecurityNumber}
-                    onChange={(e) => handleInputChange('socialSecurityNumber', e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('socialSecurityNumber', e.target.value)}
                   />
                   <Input
                     placeholder="Telefon *"
                     value={customerInfo.phone}
-                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('phone', e.target.value)}
                   />
                 </div>
 
                 <Input
                   placeholder="E-post *"
                   value={customerInfo.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('email', e.target.value)}
                   style={{ marginBottom: '1rem' }}
                 />
               </CardContent>
@@ -215,21 +212,21 @@ export default function CheckoutPage() {
                 <Input
                   placeholder="Adress (med Google autocomplete) *"
                   value={customerInfo.address}
-                  onChange={(e) => handleInputChange('address', e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('address', e.target.value)}
                   style={{ marginBottom: '1rem' }}
                 />
 
                 <Input
                   placeholder="Portkod *"
                   value={customerInfo.portCode}
-                  onChange={(e) => handleInputChange('portCode', e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('portCode', e.target.value)}
                   style={{ marginBottom: '1rem' }}
                 />
 
                 <Input
                   placeholder="Nyckel/tillträde (t.ex. under mattan, brevlåda, etc.) *"
                   value={customerInfo.keyAccess}
-                  onChange={(e) => handleInputChange('keyAccess', e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('keyAccess', e.target.value)}
                   style={{ marginBottom: '1.5rem' }}
                 />
 
@@ -277,7 +274,7 @@ export default function CheckoutPage() {
                 <textarea
                   placeholder="Skriv eventuella specialönskemål eller kommentarer här..."
                   value={customerInfo.specialRequests}
-                  onChange={(e) => handleInputChange('specialRequests', e.target.value)}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => handleInputChange('specialRequests', e.target.value)}
                   style={{
                     width: '100%',
                     minHeight: '100px',
@@ -389,7 +386,7 @@ export default function CheckoutPage() {
                   <Input
                     placeholder="Rabattkod / presentkort"
                     value={customerInfo.discountCode}
-                    onChange={(e) => handleInputChange('discountCode', e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('discountCode', e.target.value)}
                     style={{ flex: 1 }}
                   />
                   <Button variant="ghost" size="sm">

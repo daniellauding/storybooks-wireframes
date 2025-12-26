@@ -196,12 +196,7 @@ export default function ResultsPage() {
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))',
-          gap: '1.5rem',
-          // Mobile: show 1 card per row, Tablet+: show 2 cards per row
-          '@media (max-width: 768px)': {
-            gridTemplateColumns: '1fr',
-            gap: '1rem'
-          }
+          gap: '1.5rem'
         }}>
           {cleaningCompanies.map((company) => {
             const rotation = React.useMemo(() => Math.random() * 1 - 0.5, []);

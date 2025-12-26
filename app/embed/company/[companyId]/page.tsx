@@ -147,7 +147,7 @@ export default function CompanyEmbedPage({ params }: { params: Promise<{ company
             </div>
 
             <div style={{ textAlign: 'right' }}>
-              <Badge variant="secondary" size="sm">
+              <Badge variant="success" size="sm">
                 ✅ Stadjakten Verified
               </Badge>
             </div>
