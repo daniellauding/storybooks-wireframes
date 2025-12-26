@@ -342,11 +342,8 @@ export default function CompanyPage({ params }: { params: Promise<{ companyId: s
       <Container maxWidth="xl" style={{ padding: '2rem' }}>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '2fr 1fr',
-          gap: '2rem',
-          '@media (max-width: 1024px)': {
-            gridTemplateColumns: '1fr'
-          }
+          gridTemplateColumns: '1fr',
+          gap: '2rem'
         }}>
           
           {/* Left column - Services and info */}

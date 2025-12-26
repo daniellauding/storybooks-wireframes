@@ -136,7 +136,14 @@ export default function CombinedWizardPage() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-color, #f0f0f0)' }}>
       <Header 
-        logo="Städkjakten"
+        logo={
+          <span 
+            style={{ cursor: 'pointer' }} 
+            onClick={() => window.location.href = '/clients/stadkjakten'}
+          >
+            Städkjakten
+          </span>
+        }
         navigation={navigation}
         showSearch={false}
         variant="default"
@@ -149,6 +156,25 @@ export default function CombinedWizardPage() {
         textAlign: 'center'
       }}>
         <Container maxWidth="xl">
+          {/* Show pre-selected company/service if available */}
+          {(preSelectedCompany || preSelectedService) && (
+            <Card variant="primary" padding="sm" style={{ marginBottom: '1rem', display: 'inline-block' }}>
+              <CardContent>
+                <div style={{ 
+                  color: 'white', 
+                  fontSize: '0.875rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}>
+                  <span>✓</span>
+                  {preSelectedCompany && <span>Företag #{preSelectedCompany}</span>}
+                  {preSelectedService && <span>• {preSelectedService}</span>}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+          
           <div style={{
             display: 'inline-block',
             backgroundColor: 'var(--accent, #007bff)',
