@@ -8,10 +8,17 @@ import { Rating } from '@/components/storybook/Rating';
 import { Container } from '@/components/storybook/Container';
 import React, { useState, useEffect } from 'react';
 
-export default function CompanyPage({ params }: { params: { companyId: string } }) {
+export default function CompanyPage({ params }: { params: Promise<{ companyId: string }> }) {
   const [companyData, setCompanyData] = useState<any>(null);
+  const [resolvedParams, setResolvedParams] = useState<{ companyId: string } | null>(null);
 
   useEffect(() => {
+    // Resolve the params Promise first
+    params.then(setResolvedParams);
+  }, [params]);
+
+  useEffect(() => {
+    if (!resolvedParams) return;
     // Mock company data - in real app this would be fetched from API
     const companies = {
       '1': {
@@ -199,11 +206,11 @@ export default function CompanyPage({ params }: { params: { companyId: string } 
       }
     };
 
-    const company = companies[params.companyId as keyof typeof companies];
+    const company = companies[resolvedParams.companyId as keyof typeof companies];
     if (company) {
       setCompanyData(company);
     }
-  }, [params.companyId]);
+  }, [resolvedParams]);
 
   const navigation = [
     { id: 'hemstadning', label: 'Hemstädning', href: '/hemstadning' },
