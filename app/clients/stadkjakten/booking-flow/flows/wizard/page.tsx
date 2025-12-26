@@ -158,7 +158,7 @@ export default function CombinedWizardPage() {
         logo={
           <span 
             style={{ cursor: 'pointer' }} 
-            onClick={() => window.location.href = '/clients/stadkjakten'}
+            onClick={() => window.location.href = '/'}
           >
             Städkjakten
           </span>

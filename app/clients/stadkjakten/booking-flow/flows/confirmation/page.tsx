@@ -38,7 +38,7 @@ export default function ConfirmationPage() {
         logo={
           <span 
             style={{ cursor: 'pointer' }} 
-            onClick={() => window.location.href = '/clients/stadkjakten'}
+            onClick={() => window.location.href = '/'}
           >
             Städkjakten
           </span>
@@ -189,7 +189,7 @@ export default function ConfirmationPage() {
           <Button
             variant="primary"
             size="lg"
-            onClick={() => window.location.href = '/clients/stadkjakten'}
+            onClick={() => window.location.href = '/'}
             style={{ marginRight: '1rem' }}
           >
             ← Tillbaka till start
