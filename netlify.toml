@@ -1,7 +1,6 @@
 [build]
-  base = "wireframe-app"
   command = "npm run build"
-  publish = "wireframe-app/.next"
+  publish = ".next"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
