@@ -47,7 +47,8 @@ export const CombinedSearch: React.FC<CombinedSearchProps> = ({
 
   const handleSearch = () => {
     // Navigate directly to the wizard flow - no city/service required
-    window.location.href = '/clients/stadkjakten/booking-flow/flows/house-type';
+    console.log('[DEBUG] Search clicked - navigating to wizard');
+    window.location.href = '/clients/stadkjakten/booking-flow/flows/wizard';
   };
 
   const handleCitySelect = (city: string) => {
@@ -188,7 +189,6 @@ export const CombinedSearch: React.FC<CombinedSearchProps> = ({
         variant="primary"
         size="lg"
         fullWidth
-        disabled={!cityInput || !selectedService}
       >
         🔍 Sök städfirmor
       </Button>

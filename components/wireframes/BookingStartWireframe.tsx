@@ -38,7 +38,14 @@ export default function BookingStartWireframe() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-color, #f0f0f0)' }}>
       <Header 
-        logo="Städkjakten"
+        logo={
+          <span 
+            style={{ cursor: 'pointer' }} 
+            onClick={() => window.location.href = '/'}
+          >
+            Städkjakten
+          </span>
+        }
         navigation={navigation}
         showSearch={false}
         variant="default"
