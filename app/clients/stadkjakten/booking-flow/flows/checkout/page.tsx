@@ -10,6 +10,8 @@ import React, { useState, useEffect } from 'react';
 
 export default function CheckoutPage() {
   const [bookingData, setBookingData] = useState<any>({});
+  const [mounted, setMounted] = useState(false);
+  const [titleRotation, setTitleRotation] = useState(0);
   const [customerInfo, setCustomerInfo] = useState({
     firstName: '',
     lastName: '',
@@ -39,6 +41,9 @@ export default function CheckoutPage() {
       originalPrice: parseInt(params.get('originalPrice') || '1800'),
       customerPrice: parseInt(params.get('customerPrice') || '900')
     });
+    // Set client-side values to avoid hydration errors
+    setMounted(true);
+    setTitleRotation(Math.random() * 1 - 0.5);
   }, []);
 
   const navigation = [
@@ -133,7 +138,7 @@ export default function CheckoutPage() {
               fontSize: '2rem',
               color: 'var(--text-primary, #1a1a1a)',
               marginBottom: '1.5rem',
-              transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+              transform: mounted ? `rotate(${titleRotation}deg)` : 'none'
             }}>
               Slutför din bokning
             </h1>

@@ -11,10 +11,17 @@ import React, { useState, useEffect } from 'react';
 export default function CompanyPage({ params }: { params: Promise<{ companyId: string }> }) {
   const [companyData, setCompanyData] = useState<any>(null);
   const [resolvedParams, setResolvedParams] = useState<{ companyId: string } | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [logoRotation, setLogoRotation] = useState(0);
+  const [titleRotation, setTitleRotation] = useState(0);
 
   useEffect(() => {
     // Resolve the params Promise first
     params.then(setResolvedParams);
+    // Set client-side values to avoid hydration errors
+    setMounted(true);
+    setLogoRotation(Math.random() * 5 - 2.5);
+    setTitleRotation(Math.random() * 1 - 0.5);
   }, [params]);
 
   useEffect(() => {
@@ -281,7 +288,7 @@ export default function CompanyPage({ params }: { params: Promise<{ companyId: s
           }}>
             <div style={{
               fontSize: '4rem',
-              transform: `rotate(${Math.random() * 5 - 2.5}deg)`
+              transform: mounted ? `rotate(${logoRotation}deg)` : 'none'
             }}>
               {companyData.logo}
             </div>
@@ -291,7 +298,7 @@ export default function CompanyPage({ params }: { params: Promise<{ companyId: s
                 fontFamily: 'Kalam, cursive',
                 fontSize: '3rem',
                 margin: '0 0 0.5rem 0',
-                transform: `rotate(${Math.random() * 1 - 0.5}deg)`
+                transform: mounted ? `rotate(${titleRotation}deg)` : 'none'
               }}>
                 {companyData.name}
               </h1>
@@ -419,8 +426,8 @@ export default function CompanyPage({ params }: { params: Promise<{ companyId: s
                   display: 'grid',
                   gap: '1rem'
                 }}>
-                  {companyData.services.map((service: any) => {
-                    const rotation = React.useMemo(() => Math.random() * 1 - 0.5, []);
+                  {companyData.services.map((service: any, index: number) => {
+                    const rotation = mounted ? (Math.sin(index) * 0.5) : 0;
                     
                     return (
                       <Card
