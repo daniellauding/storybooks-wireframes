@@ -81,11 +81,6 @@ export default function CheckoutPage() {
   };
 
   const handleCheckout = () => {
-    if (!isFormValid()) {
-      alert('Fyll i alla obligatoriska fält');
-      return;
-    }
-    
     console.log('Processing checkout with:', { bookingData, customerInfo });
     alert('Betalning genomförs... (Demo)');
   };
@@ -425,19 +420,16 @@ export default function CheckoutPage() {
               variant="primary"
               size="lg"
               onClick={handleCheckout}
-              disabled={!isFormValid()}
               style={{
                 width: '100%',
                 fontSize: '1.125rem',
                 padding: '1rem',
-                opacity: isFormValid() ? 1 : 0.5,
-                cursor: isFormValid() ? 'pointer' : 'not-allowed',
                 position: 'sticky',
                 bottom: '1rem',
                 zIndex: 10
               }}
             >
-              {isFormValid() ? `💳 Betala ${totalAmount} kr` : '⚠️ Fyll i alla obligatoriska fält'}
+              💳 Betala {totalAmount} kr
             </Button>
           </div>
         </div>

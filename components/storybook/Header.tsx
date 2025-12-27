@@ -119,7 +119,17 @@ export const Header: React.FC<HeaderProps> = ({
 
   const renderLogo = () => {
     if (typeof logo === 'string') {
-      return <div style={getLogoStyles()}>{logo}</div>;
+      return (
+        <div 
+          style={{
+            ...getLogoStyles(),
+            cursor: 'pointer'
+          }}
+          onClick={() => window.location.href = '/clients/stadkjakten/booking-flow/flows/booking-start'}
+        >
+          {logo}
+        </div>
+      );
     }
     return logo;
   };

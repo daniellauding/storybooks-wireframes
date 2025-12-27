@@ -139,12 +139,8 @@ export const Input: React.FC<InputProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
-      // Check if onChange expects just the value or the event
-      if (onChange.length === 1) {
-        (onChange as (value: string) => void)(e.target.value);
-      } else {
-        (onChange as (e: React.ChangeEvent<HTMLInputElement>) => void)(e);
-      }
+      // Always call onChange with the event to ensure compatibility
+      (onChange as (e: React.ChangeEvent<HTMLInputElement>) => void)(e);
     }
   };
 

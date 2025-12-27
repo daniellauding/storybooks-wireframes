@@ -155,14 +155,7 @@ export default function CombinedWizardPage() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-color, #f0f0f0)' }}>
       <Header 
-        logo={
-          <span 
-            style={{ cursor: 'pointer' }} 
-            onClick={() => window.location.href = '/'}
-          >
-            Städkjakten
-          </span>
-        }
+        logo="Städkjakten"
         navigation={navigation}
         showSearch={false}
         variant="default"
